@@ -76,7 +76,7 @@
 
         <div class="map">
           <img usemap="#map" src="../../assets/imgs/cooperation_map.png" alt />
-          <!-- <map id="map" name="map">
+          <map id="map" name="map">
             <area
               shape="rect"
               coords="0, 173, 270, 240"
@@ -95,7 +95,7 @@
               href="/company?id=29160"
               alt="瑞金市数据要素服务工作站"
             />
-          </map> -->
+          </map>
         </div>
 
         <div class="cooperation">
