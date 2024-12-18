@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container numIntelligence-bg">
     <div class="container-main">
       <div class="classify">
         <div
@@ -27,24 +27,26 @@
               <div class="content-box-time">数据截止时间：2024-12-7</div>
             </div>
             <div class="content-box-list">
-              <div class="content-box-img">
-                <div class="content-box-img-text">{{
-              industry.name == "现代家居"
-                ? 21340
-                : industry.name == "生物医药"
-                ? 82695
-                : industry.name == "有色金属和新材料"
-                ? 72951
-                : industry.name == "新能源和新能源汽车"
-                ? 66482
-                : industry.name == "纺织服装"
-                ? 37516
-                : industry.name == "绿色食品"
-                ? 59526
-                : industry.name == "电子信息"
-                ? 568644
-                : 21340
-            }}</div>
+              <div class="content-box-img" v-if="activeType==0">
+                <div class="content-box-img-text">
+                  {{
+                    industry.name == "现代家居"
+                      ? 21340
+                      : industry.name == "生物医药"
+                      ? 82695
+                      : industry.name == "有色金属和新材料"
+                      ? 72951
+                      : industry.name == "新能源和新能源汽车"
+                      ? 66482
+                      : industry.name == "纺织服装"
+                      ? 37516
+                      : industry.name == "绿色食品"
+                      ? 59526
+                      : industry.name == "电子信息"
+                      ? 568644
+                      : 21340
+                  }}
+                </div>
                 <div class="content-box-img-unit">个</div>
               </div>
               <div class="content-box-company">
@@ -84,29 +86,45 @@
                 <div class="content-box-title-text">科技技术</div>
                 <div class="content-box-time">数据截止时间：2024-12-7</div>
               </div> -->
-              
-              <div class="content-box-list2" style="height: 30.3125rem" >
-              
-                <el-carousel indicator-position="outside " height="420" style="width: 100%;height:420px" >
-                <el-carousel-item v-for='(item,index) in Math.ceil(imgArr.length/2)' :key="item" style="width: 100%;height:420px">
-                  <div class="img-box margin-bottom" v-if="imgArr[index]">
-                  <img
-                    :src="require('../../../assets/images/numIntelligence/star'+(imgArr[index])+'.png')"
-                    class="star"
-                    alt=""
-                  />
-                </div>
-                <div class="img-box line" v-if="imgArr[index+1]">
-                  <img
-                      :src="require('../../../assets/images/numIntelligence/star'+(imgArr[index+1])+'.png')"
-                    class="star"
-                    alt=""
-                  />
-                </div>
-              
-                </el-carousel-item>
-              </el-carousel>
-              
+
+              <div class="content-box-list2" style="height: 31rem">
+                <el-carousel
+                  indicator-position="outside "
+                  height="380"
+                  style="width: 100%; height: 380px; overflow: hidden"
+                  class="scroll"
+                >
+                  <el-carousel-item
+                    v-for="(item, index) in Math.ceil(imgArr.length / 2)"
+                    :key="item"
+                    style="width: 100%; height: 380px"
+                  >
+                    <div class="img-box margin-bottom" v-if="imgArr[index]">
+                      <img
+                        :src="
+                          require('../../../assets/images/numIntelligence/star' +
+                            imgArr[index] +
+                            '.png')
+                        "
+                        class="star"
+                        alt=""
+                      />
+                    </div>
+                    <div class="text">{{ imgArrName[index] }}</div>
+                    <div class="img-box line" v-if="imgArr[index + 1]">
+                      <img
+                        :src="
+                          require('../../../assets/images/numIntelligence/star' +
+                            imgArr[index + 1] +
+                            '.png')
+                        "
+                        class="star"
+                        alt=""
+                      />
+                    </div>
+                    <div class="text">{{ imgArrName[index + 1] }}</div>
+                  </el-carousel-item>
+                </el-carousel>
               </div>
               <!-- <div class="content-box-list2" style="height: 13.3125rem">
                
@@ -132,7 +150,8 @@
         <!-- <div class="container-middle-content"></div> -->
         <div class="middle-tips">
           <div class="text-white">专利总数</div>
-          <div class="text-num">{{
+          <div class="text-num">
+            {{
               industry.name == "现代家居"
                 ? 21340
                 : industry.name == "生物医药"
@@ -148,7 +167,9 @@
                 : industry.name == "电子信息"
                 ? 568644
                 : 21340
-            }} <span class="text-unit">个</span></div>
+            }}
+            <span class="text-unit">个</span>
+          </div>
         </div>
         <div class="echarts-img">
           <div class="img" @click="bindChangeRegion('全国')">
@@ -189,12 +210,17 @@
             v-if="isMap"
             width="65.3125rem"
             height="47.8125rem"
+             :type="0"
           />
         </div>
         <div class="container-middle-bottom">
           <div class="middle-bottom-content">
             <div class="middle-bottom-main">
-              <div class="bottom-main-item">
+              <div
+                class="bottom-main-item"
+                :class="activeType == 0 ? 'active' : ''"
+                @click="bindChangeType(0)"
+              >
                 <div class="main-item-image">
                   <img
                     src="../../../assets/images/numIntelligence/icon32.png"
@@ -203,7 +229,11 @@
                 </div>
                 <div class="main-item-text">专利企业</div>
               </div>
-              <div class="bottom-main-item active">
+              <div
+                class="bottom-main-item"
+                :class="activeType == 1 ? 'active' : ''"
+                @click="bindChangeType(1)"
+              >
                 <div class="main-item-image">
                   <img
                     src="../../../assets/images/numIntelligence/icon33.png"
@@ -241,34 +271,14 @@
               <div class="content-box-company">
                 <div class="company-header">
                   <div class="company-header-text">分类名称</div>
-                  <div class="company-header-text">
-                    <!-- {{
-                      industry.name == "现代家居"
-                        ? 65
-                        : industry.name == "生物医药"
-                        ? 73
-                        : industry.name == "有色金属和新材料"
-                        ? 50
-                        : industry.name == "新能源和新能源汽车"
-                        ? 29
-                        : industry.name == "纺织服装"
-                        ? 113
-                        : industry.name == "绿色食品"
-                        ? 71
-                        : industry.name == "电子信息"
-                        ? 312
-                        : 65
-                    }} -->
-
-                    数量
-                  </div>
+                  <div class="company-header-text">数量</div>
                 </div>
                 <div class="company-item">
                   <div class="company-item-text">技术创新中心</div>
                   <div class="company-item-text">
                     {{
                       industry.name == "现代家居"
-                        ? 0
+                        ? 6
                         : industry.name == "生物医药"
                         ? 21
                         : industry.name == "有色金属和新材料"
@@ -281,7 +291,7 @@
                         ? 8
                         : industry.name == "电子信息"
                         ? 11
-                        : 0
+                        : 6
                     }}
                   </div>
                 </div>
@@ -312,7 +322,7 @@
           </div>
           <div class="content-box">
             <div class="content-box-title">
-              <div class="content-box-title-text">技术创新载体</div>
+              <div class="content-box-title-text">工业设计中心</div>
               <div class="content-box-time">数据截止时间：2024-12-7</div>
             </div>
             <div class="content-box-list">
@@ -345,7 +355,7 @@
                       </div>
                     </div> -->
                     <div class="company-item">
-                      <div class="company-item-text-small"> {{ item.name }}</div>
+                      <div class="company-item-text-small">{{ item.name }}</div>
                       <!-- <div class="company-item-text-right">
                         {{ item.classify }}
                       </div> -->
@@ -357,30 +367,51 @@
           </div>
           <div class="content-box">
             <div class="content-box-title">
-              <div class="content-box-title-text">工业设计中心</div>
+              <div class="content-box-title-text">技术创新中心</div>
               <div class="content-box-time">数据截止时间：2024-12-7</div>
             </div>
             <div class="content-box-list" style="height: 20.625rem">
-              <div class="content-box-image">
+              <div
+                class="content-box-image scroll"
+                v-scrollList="6000"
+                style="height: 20.625rem"
+              >
                 <div class="content-box-image-box">
-                  <div class="image-box-item">
+                  <div
+                    class="image-box-item"
+                    v-for="(item, index) in innovateList"
+                    :key="index"
+                  >
                     <div class="text1"></div>
-                    <div
-                      class="text2"
-                      style="width: 7.5rem; text-align: center"
-                    >
-                      美克国际家居用品股份有限公司工业设计中心
+                    <div class="text2">{{ item.name }}</div>
+                  </div>
+                  <!-- <div class="image-box-item">
+                    <div class="text1"></div>
+                    <div class="text2">{{}}
                     </div>
                   </div>
                   <div class="image-box-item">
                     <div class="text1"></div>
-                    <div class="text2">赣璞设计国家工业设计中心</div>
+                    <div class="text2">赣州市德普特科技有限公司</div>
                   </div>
-                </div>
-                <div class="content-box-image-box">
+
                   <div class="image-box-item">
                     <div class="text1"></div>
-                    <div class="text2">赣南师范大学家具工业设计中心</div>
+                    <div class="text2">赣州市德普特科技有限公司</div>
+                  </div>
+                  <div class="image-box-item">
+                    <div class="text1"></div>
+                    <div class="text2">赣州市德普特科技有限公司</div>
+                  </div>
+                  <div class="image-box-item">
+                    <div class="text1"></div>
+                    <div class="text2">赣州市德普特科技有限公司</div>
+                  </div> -->
+                </div>
+                <!-- <div class="content-box-image-box">
+                  <div class="image-box-item">
+                    <div class="text1"></div>
+                    <div class="text2">赣州汇明木业有限公司技术中心</div>
                   </div>
                   <div class="image-box-item">
                     <div class="text1"></div>
@@ -388,38 +419,11 @@
                   </div>
                   <div class="image-box-item">
                     <div class="text1"></div>
-                    <div class="text2">南康家居特色小镇工业设计基地</div>
+                    <div class="text2">美克数创(赣州)家居智造有限公司</div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
-            <!-- <div class="content-box">
-              <div class="content-box-title">
-                <div class="content-box-title-text">创新服务支撑</div>
-                <div class="content-box-time">数据截止时间：2024-12-7</div>
-              </div>
-              <div class="content-box-list" style="height: 11.4375rem">
-                <div class="content-box-image">
-                  <div class="content-box-image-box">
-                    <div class="image-box-item2">
-                      <div class="text1">200+</div>
-                      <div class="text2">（家）</div>
-                      <div class="text3">设计机构</div>
-                    </div>
-                    <div class="image-box-item2">
-                      <div class="text1">2000+</div>
-                      <div class="text2">（名）</div>
-                      <div class="text3">设计师</div>
-                    </div>
-                    <div class="image-box-item2">
-                      <div class="text1">10000+</div>
-                      <div class="text2">（件）</div>
-                      <div class="text3">年设计原创产品</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -454,14 +458,16 @@ export default {
       list: [],
       activeTab: 1,
       isMap: true,
-      imgArr:[16,17],
+      imgArr: [16, 17],
+      imgArrName: ["科技技术奖", "科技技术奖"],
       chartOption: { data: [] },
       patentJson,
       patentList: [],
       threeList: [],
       industry: {},
-      type: "规上企业",
+      type: "",
       region: "全国",
+      activeType: 0,
     };
   },
   directives: {
@@ -475,7 +481,11 @@ export default {
       handler(newValue, oldValue) {
         if (newValue.name) {
           this.industry = newValue;
-          this.getCompanyList(newValue);
+          if (this.activeType == 0) {
+            this.getCompanyList(newValue, this.type, this.region);
+          } else {
+            this.getOrgmap(newValue, this.type, this.region);
+          }
 
           this.patentList = this.patentJson.filter(
             (item) => item.type == newValue.name
@@ -486,22 +496,53 @@ export default {
           this.innovateList = this.innovateJson.filter(
             (item) => item.type == newValue.name
           );
-          this.imgArr=newValue.name == "现代家居"?[16,17]: newValue.name == "生物医药"
-                ? [3]
-                : newValue.name == "有色金属和新材料"
-                ? [5,6]
-                : newValue.name == "新能源和新能源汽车"
-                ? [11,4]
-                : newValue.name == "纺织服装"
-                ? [1,7]
-                : newValue.name == "绿色食品"
-                ? [2,12]
-                : newValue.name == "电子信息"
-                ? [8,9,10,13,14,15]
-                : [16,17]
-        }
+          this.imgArr =
+            newValue.name == "现代家居"
+              ? [16, 17]
+              : newValue.name == "生物医药"
+              ? [3]
+              : newValue.name == "有色金属和新材料"
+              ? [5, 6]
+              : newValue.name == "新能源和新能源汽车"
+              ? [11, 4]
+              : newValue.name == "纺织服装"
+              ? [1, 7]
+              : newValue.name == "绿色食品"
+              ? [2, 12]
+              : newValue.name == "电子信息"
+              ? [8, 9, 10, 13, 14, 15]
+              : [16, 17];
 
-       
+          this.imgArrName =
+            newValue.name == "现代家居"
+              ? ["科技技术奖", "科技技术奖"]
+              : newValue.name == "生物医药"
+              ? ["中国名族医药协会科学技术进步一等奖"]
+              : newValue.name == "有色金属和新材料"
+              ? [
+                  "全国有色金属标准化技术委员会技术标准优秀奖",
+                  "中国有色金属工业科学技术一等奖",
+                ]
+              : newValue.name == "新能源和新能源汽车"
+              ? ["电力科技创新奖", "国家科学技术进步奖"]
+              : newValue.name == "纺织服装"
+              ? ["纺织科技进步一等奖", "纺织自然科学一等奖"]
+              : newValue.name == "绿色食品"
+              ? [
+                  "中国轻工业联合会科学技术进步奖一等奖",
+                  "中国食品工业协会科学技术奖一等奖",
+                ]
+              : newValue.name == "电子信息"
+              ? [
+                  "年度技术创新奖",
+                  "中国电子学会科技进步一等奖",
+                  "国家科学技术进步一等奖",
+                  "5G+工业互联网行业赛二等奖",
+                  "赣州经开区电子信息企业协会第一届理事会副会长单位",
+                  "中国产业互联网领军企业",
+                ]
+              : ["科技技术奖", "科技技术奖"];
+        }
       },
       immediate: true,
       deep: true,
@@ -519,19 +560,32 @@ export default {
   },
 
   methods: {
+    bindChangeType(index) {
+      this.activeType = index;
+      if (index == 0) {
+        this.getCompanyList(this.industry, this.type, this.region);
+      } else {
+        this.getOrgmap(this.industry, this.type, this.region);
+      }
+    },
     bindTab(url) {
       this.$router.push("/numIntelligence" + url);
     },
     bindChangeRegion(region) {
       this.region = region;
-      this.getCompanyList(this.industry, this.type,region);
+      if (this.activeType == 0) {
+        this.getCompanyList(this.industry, this.type, region);
+      } else {
+        this.getOrgmap(this.industry, this.type, region);
+      }
     },
-    getCompanyList(data,type, region) {
+    getCompanyList(data, type, region) {
+      this.threeList = [];
       this.chartOption.data = [];
       this.$request
         .get(Api.getPatentmap, {
           params: {
-            industry: data&&data.name ? data.name : "现代家居",
+            industry: data && data.name ? data.name : "现代家居",
             keyword: this.searchText,
             type: type ? type : "",
             region: region ? region : "全国",
@@ -548,23 +602,25 @@ export default {
 
               this.chartOption.data = [];
             }
-            this.getOrgmap();
+            // this.getOrgmap();
           }
         });
     },
-    getOrgmap(data,region) {
+    getOrgmap(data, type, region) {
+      this.threeList = [];
       this.$request
         .get(Api.orgmap, {
           params: {
-            industry: data ? data.name : "现代家居",
+            industry: data && data.name ? data.name : "现代家居",
             keyword: this.searchText,
+            type: type ? type : "",
             region: region ? region : "全国",
           },
         })
         .then((res) => {
           if (res.code == 0) {
             if (res.data.list) {
-              this.threeList = [...this.threeList, res.data.list];
+              this.threeList = res.data.list;
               this.getMap(2);
             } else {
               this.isMap = true;
@@ -602,9 +658,14 @@ export default {
 </script>
 
 <style scoped lang="less">
+.numIntelligence-bg {
+  width: 100vw;
+  height: calc(100vh - 5.725rem);
+  background: #111b34;
+}
 .container {
   width: 100%;
-  height: 100%;
+  // height: 100%;
 
   background-color: #111b34;
   overflow: hidden;
@@ -801,7 +862,7 @@ export default {
             background-size: 100% 100%;
             .img-box {
               width: 18rem;
-              height: 11.9375rem;
+              height: 11rem;
               margin: 0 auto 8px;
               position: relative;
               background: url("../../../assets/images/numIntelligence/bg7.png")
@@ -820,9 +881,10 @@ export default {
               width: 18rem;
               height: 11.9375rem;
             }
-            .img-box.line {
-              width: 8.75rem;
-              height: 11.9375rem;
+            .text {
+              color: #fff;
+              padding: 4px;
+              font-size: 14px;
             }
           }
         }
@@ -1137,16 +1199,19 @@ export default {
                 width: 25rem;
                 display: flex;
                 justify-content: space-around;
+                flex-wrap: wrap;
                 margin-top: 3.625rem;
+
                 padding-bottom: 0.2rem;
                 .image-box-item {
                   width: 5.5rem;
                   height: 5rem;
+                  margin: 0 10px 30px;
                   background: url("../../../assets/images/numIntelligence/icon31.png")
                     no-repeat center;
                   background-size: 100% 100%;
                   .text1 {
-                  min-height: 1rem;
+                    min-height: 1rem;
                     font-family: YouSheBiaoTiHei, YouSheBiaoTiHei;
                     font-size: 1.75rem;
                     color: #ffffff;
@@ -1184,6 +1249,8 @@ export default {
                     font-size: 0.75rem;
                     color: #ffffff;
                     margin-top: 0.5rem;
+                    text-align: center;
+                    text-align: center;
                   }
                   .text3 {
                     font-size: 0.75rem;

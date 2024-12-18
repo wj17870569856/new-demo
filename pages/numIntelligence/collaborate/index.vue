@@ -157,7 +157,7 @@
           <div
             class="scroll"
             v-scrollList="6000"
-            style="height: 16.8rem; margin-bottom: 10px"
+            style="height: 42.8rem; margin-bottom: 10px"
           >
             <div
               class="scroll-list"
@@ -187,15 +187,15 @@
             </div>
           </div>
 
-          <div class="collaborate-bottom">
-            <div class="collaborate-title">
+          <!-- <div class="collaborate-bottom"> -->
+            <!-- <div class="collaborate-title">
               <div>创新协同</div>
             </div>
 
             <div class="text-align:center">
               <el-empty></el-empty>
-            </div>
-          </div>
+            </div> -->
+          <!-- </div> -->
         </div>
       </div>
     </div>
@@ -351,6 +351,7 @@ export default {
 <style lang="less" scoped>
 .numIntelligence-bg {
   width: 100vw;
+  height: calc(100vh - 5.725rem);
   background: #030913;
 }
 .classify {

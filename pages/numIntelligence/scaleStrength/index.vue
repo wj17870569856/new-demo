@@ -1,5 +1,5 @@
 <template>
-  <div class="deveop-container">
+  <div class="deveop-container numIntelligence-bg">
     <div class="container-main">
       <div class="classify">
         <div
@@ -146,7 +146,7 @@
       </div>
       <div class="container-middle">
         <div class="middle-tips">
-          <div class="text-white">企业个数</div>
+          <div class="text-white">企业数量</div>
           <div class="text-num">
             {{
               industry.name == "现代家居"
@@ -236,6 +236,7 @@
             :chartOption="chartOption"
             width="65.3125rem"
             height="47.8125rem"
+             :type="0"
             v-if="isMap && chartOption.data.length"
           />
         </div>
@@ -524,6 +525,7 @@ export default {
     this.getCompanyList();
     this.chartOptionRing = this.typesJson["modern"];
   },
+
   methods: {
     bindTab(url) {
       this.$router.push("/numIntelligence" + url);
@@ -556,7 +558,7 @@ export default {
           : data.name == "生物医药"
           ? [71.7, 80.1, 99.1, 35.4, 37.2]
           : data.name == "有色金属和新材料"
-          ? [606.4, 551.5, 716.1, 76.3, 138.8]
+          ? [606.4, 551.5, 716.1, 76.3, 1230.8]
           : data.name == "新能源和新能源汽车"
           ? [58.6, 66.6, 74.7, 76.3, 138.8]
           : data.name == "纺织服装"
@@ -611,6 +613,7 @@ export default {
       this.getCompanyList(this.industry, this.type, region);
     },
     getCompanyList(data, type, region) {
+      this.threeList =[]
       this.$request
         .get(Api.getcompanymap, {
           params: {
@@ -668,10 +671,15 @@ export default {
 };
 </script>
 <style scoped lang="less">
+.numIntelligence-bg {
+  width: 100vw;
+  height: calc(100vh - 5.725rem);
+  background: #111b34;
+}
 .deveop-container {
-  width: 100%;
-  height: 100%;
-  background-color: #111b34;
+  // width: 100%;
+  // height: 100%;
+  // background-color: #111b34;
   overflow: hidden;
   .container-main {
     width: 100%;
@@ -1030,6 +1038,7 @@ export default {
         height: 50px;
         display: flex;
         align-items: center;
+        justify-content: center;
         position: absolute;
         left: 50%;
         top: 2rem;
@@ -1302,7 +1311,7 @@ export default {
                   }
                   .line-box-item-text {
                     // flex: 1;
-                    width: 30px;
+                    width: 50px;
                     flex-shrink: 0;
 
                     font-size: 0.75rem;

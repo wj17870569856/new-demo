@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--  -->
-    <div :id="chartId" class="chart" ref="chart" :style="{ width: width, height }" ></div>
+    <div :id="chartId" class="chart" ref="chart" :style="{ width: width, height }" v-if="isShoW"></div>
   </div>
 </template>
 
@@ -68,7 +68,6 @@ export default {
     },
   },
   mounted() {
-    console.log(555,1111)
     this.init();
   },
   destroyed() {
@@ -85,8 +84,7 @@ export default {
           "AMap.Geocoder",
           "AMap.Marker",
           "AMap.AutoComplete",
-          "AMap.DistrictSearch"
-          , 'AMap.InfoWindow'
+          "AMap.DistrictSearch",
         ],
         () => {
           if (localStorage.getItem("mask")) {
@@ -172,61 +170,47 @@ export default {
           features: this.chartOption.data,
         },
       });
-      if (this.type == 1) {
-        var labelsLayer = (window.labelsLayer = new Loca.PointLayer({
-          zIndex: 10,
-          // blend: 'lighter',
-        }));
-        var style = {
-          radius: 3.5,
-          unit: 'px',
-          duration: 1000,
-          color: (index, feat) => {
-            return feat.properties.type == 0
-              ? '#2EEFB5'
-              : feat.properties.type == 1
-                ? "#29ABE5"
-                : feat.properties.type == 2
-                  ? '#F1792F'
-                  : '#2A1CE6'
-          },
-          borderWidth: 1,
-          borderColor: "#B9B9B9",
-          extData: (index, feat) => {
-            return feat.properties;
-          },
-        }
-        labelsLayer.setSource(geo);
-        labelsLayer.setStyle(style);
-
-        loca.add(labelsLayer);
-        map.on('click', (e) => {
-         
-          const feat = labelsLayer.queryFeature(e.pixel.toArray());
-          if (feat) {
-            // console.log('layer', feat.properties.name, e);
-        
-
-            const content = '<div class="amap-info-window" style="display:inline-block;line-height:30px;color:#26FDF0;text-align:center">公司：' +
-              feat.properties.name+'</div>';
-          var infoWindow = new AMap.InfoWindow({
-            isCustom: true,
-            content: content,  //传入 dom 对象，或者 html 字符串
-            offset: new AMap.Pixel(0, 0)
-          });
-          infoWindow.open(map, e.lnglat);
+      // if (this.type == 1) {
+      //   var labelsLayer = (window.labelsLayer = new Loca.ScatterLayer({
+      //     zIndex: 10,
+      //     // blend: 'lighter',
+      //   }));
+      //   var style = {
+      //     // radius: 3.5,
+      //     unit: 'px',
+      //     unit: 'px',
+      //     size: [50, 50],
+      //     texture: 'https://a.amap.com/Loca/static/loca-v2/demos/images/breath_red.png',
+      //     animate: true,
+      //     duration: 1000,
+      //     // color: (index, feat) => {
+      //     //   return feat.properties.type == 0
+      //     //     ? '#2EEFB5'
+      //     //     : feat.properties.type == 1
+      //     //       ? "#29ABE5"
+      //     //       : feat.properties.type == 2
+      //     //         ? '#F1792F'
+      //     //         : '#2A1CE6'
+      //     // },
+      //     borderWidth: 1,
+      //     blurWidth: 3.5,
+      //     extData: (index, feat) => {
+      //       return feat.properties;
+      //     },
+      //   }
+      //   labelsLayer.setSource(geo);
+      //   labelsLayer.setStyle(style);
 
 
-          }
-        })
 
-      } else {
+      // } else {
+      console.log(555,this.chartOption.data)
         var labelsLayer = (window.labelsLayer = new Loca.LabelsLayer({
-          zooms: [4, 5],
-          zIndex: 1000000,
+          zooms: [4,5],
+          zIndex :1000000,
           visible: true,
-          collision: true,
-          allowCollision: true,
+    collision: true,
+    allowCollision: true,
           // collision: true, //该层内标注是否避让
           // allowCollision: true, //不同标注层之间是否避让
         }));
@@ -244,49 +228,46 @@ export default {
                     : icon4;
             },
             size: [15, 15],
-
-
+         
+            
           },
           offset: [0, 0],
           extData: (index, feat) => {
             return feat.properties;
           },
         });
+      // }
+    
 
-        loca.add(labelsLayer);
 
-        labelsLayer.on("complete", () => {
-          var normalMarker = new AMap.Marker({
-            offset: [0, 0],
-          });
-          var labelMarkers = labelsLayer.getLabelsLayer().getAllOverlays();
-          for (let marker of labelMarkers) {
-            // console.log(555,marker.getExtData(),this.chartOption.data)
-            marker.on("mouseover", (e) => {
-              var position = e.data.data && e.data.data.position;
-              console.log(789,position)
-              if (position) {
-                normalMarker.setContent(
-                  '<div class="amap-info-window" style="display:inline-block;line-height:30px;color:#26FDF0;text-align:center">公司：' +
-                  marker.getExtData().name +
-                  "</div>"
-                );
-                normalMarker.setPosition(position);
-                map.add(normalMarker);
-              }
-            });
-          }
+
+
+
+      loca.add(labelsLayer);
+
+      console.log(555,labelsLayer)
+      labelsLayer.on("complete", () => {
+        var normalMarker = new AMap.Marker({
+          offset: [0, 0],
         });
-      }
-
-
-
-
-
-
-
-
-
+        console.log(5555,labelsLayer)
+        var labelMarkers = labelsLayer.getLabelsLayer().getAllOverlays();
+        for (let marker of labelMarkers) {
+          // console.log(555,marker.getExtData(),this.chartOption.data)
+          marker.on("mouseover", (e) => {
+            var position = e.data.data && e.data.data.position;
+            if (position) {
+              normalMarker.setContent(
+                '<div class="amap-info-window" style="display:inline-block;line-height:30px;color:#26FDF0;text-align:center">公司：' +
+                marker.getExtData().name +
+                "</div>"
+              );
+              normalMarker.setPosition(position);
+              map.add(normalMarker);
+            }
+          });
+        }
+      });
     },
   },
 };

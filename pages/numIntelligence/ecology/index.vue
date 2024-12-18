@@ -25,8 +25,8 @@
                     : index == 1
                     ? "909154家"
                     : index == 2
-                    ? "713个"
-                    : "189673人"
+                    ? "719个"
+                    : "28598人"
                 }}
               </div>
               <div class="shadow">
@@ -36,8 +36,8 @@
                     : index == 1
                     ? "909154家"
                     : index == 2
-                    ? "713个"
-                    : "189673人"
+                    ? "719个"
+                    : "28598人"
                 }}
               </div>
             </div>
@@ -57,32 +57,18 @@
           </div>
         </div>
       </div>
-      <!-- <div class="info" >
-          <div>{{activeLevel==0?'企业总数':activeLevel==1?'发明专利':activeLevel==2?'载体数量':'人才数量'}}</div>
-          <div class="num" v-if="typeList&&typeList.length"> 
-           {{activeLevel==0?'21561家':activeLevel==1?'909154个':activeLevel==2?'327个':'9460名'}}</div>
-        </div> -->
       <div class="table-right">
-        <!-- <div class="second-ul" v-if="isSecond&&secondList&&secondList.length">
-          <div
-            class="second-list"
-            v-for="(item, index) in secondList"
-            :key="index"
-            :class="item.id == activeSecond ? 'active' : ''"
-            @click="getSecondSelect(item)"
-          >
-            {{ item.name }}
-          </div>
-        </div> -->
 
         <div class="map">
+          <!--   v-if="isMap && chartOption.data.length" -->
           <echartMap
             width="100vw"
             height="55.8125rem"
             chartId="map1"
             :chartOption="chartOption"
-            v-if="isMap && chartOption.data.length"
+          
             :zoom="4.5"
+            :type="1"
           />
         </div>
       </div>
@@ -154,6 +140,7 @@ export default {
   },
   mounted() {
     this.getCompanyList();
+    window.map=null;
   },
 
   methods: {
@@ -206,7 +193,7 @@ export default {
       this.$request
         .get(Api.getcompanymap, {
           params: {
-            industry: data ? data.name : "现代家居",
+            industry: data ? data.name : "",
             keyword: this.searchText,
             type: type ? type : "",
           },
@@ -284,7 +271,7 @@ export default {
       this.$request
         .get(Api.getPatentmap, {
           params: {
-            industry: data ? data.name : "现代家居",
+            industry: data ? data.name : "",
             region: "",
             type: type ? type : "",
           },
@@ -325,7 +312,7 @@ export default {
       this.$request
         .get(Api.orgmap, {
           params: {
-            industry: data ? data.name : "现代家居",
+            industry: data ? data.name : "",
             region: "",
             keyword: this.searchText,
             type: type ? type : "",
@@ -368,7 +355,7 @@ export default {
       this.$request
         .get(Api.talentmap, {
           params: {
-            industry: data ? data.name : "现代家居",
+            industry: data ? data.name : "",
             region: "",
             keyword: this.searchText,
             type: type ? type : "",
@@ -428,6 +415,7 @@ export default {
 <style lang="less" scoped>
 .numIntelligence-bg {
   width: 100vw;
+  height: calc(100vh - 5.725rem);
   background: #030913;
 }
 .search-box {
@@ -503,7 +491,8 @@ export default {
           text-align: center;
         }
         .classify-right {
-          width: 9.2rem;
+          // width: 9.2rem;
+          flex: 1;
           position: relative;
           text-align: right;
         }
@@ -533,7 +522,7 @@ export default {
         line-height: 3.125rem;
         letter-spacing: 0.2rem;
         font-size: 1.625rem;
-        text-align: center;
+        text-align: right;
         font-weight: bold;
         background-image: linear-gradient(
           to top,
@@ -554,7 +543,7 @@ export default {
         line-height: 3.125rem;
         color: #2daeef;
         letter-spacing: 0.2rem;
-        text-align: center;
+        text-align: right;
         font-size: 1.625rem;
         font-weight: bold;
         position: absolute;

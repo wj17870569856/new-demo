@@ -40,9 +40,13 @@
             }"
             :cell-style="{ 'text-align': 'center' }"
             class="scroll"
-          
           >
-            <el-table-column prop="title" label="名称" />
+            <el-table-column
+              prop="title"
+              label="名称"
+              width="460px"
+              :show-overflow-tooltip="true"
+            />
             <el-table-column prop="second_cate_name" label="级别" />
             <el-table-column prop="scope" label="操作">
               <template #default="scope">
@@ -50,10 +54,18 @@
               </template>
             </el-table-column>
           </el-table>
-          <el-pagination  style="text-align: right; margin: 20px 0" small layout=" prev, pager, next, jumper"
-                :total="total" :page-size="pageSize" :pager-count="5" :current-page="page"
-                @current-change="handleCurrentChange">
-            </el-pagination>
+          <el-pagination
+            style="text-align: right; margin: 20px 0"
+            small
+            layout=" prev, pager, next, jumper"
+            :total="total"
+            :page-size="pageSize"
+            :pager-count="5"
+            :current-page="page"
+            @current-change="handleCurrentChange"
+            background
+          >
+          </el-pagination>
         </div>
       </div>
       <div class="table-right">
@@ -66,9 +78,9 @@
               'text-align': 'center',
             }"
             :cell-style="{ 'text-align': 'center' }"
-          >        
+          >
             <el-table-column prop="title" label="名称" />
-            <el-table-column prop="scope" label="省份"> </el-table-column>
+            <el-table-column prop="second_cate_name" label="省份"> </el-table-column>
           </el-table>
           <!-- <el-pagination  style="text-align: right; margin: 20px 0" small layout=" prev, pager, next, jumper"
                 :total="total2" :page-size="pageSize" :pager-count="5" :current-page="page"
@@ -98,13 +110,13 @@ export default {
       leftList: [],
       activeTab: 4,
       tableData: [],
-      tableData2:[],
-      total2:0,
-      total:0,
+      tableData2: [],
+      total2: 0,
+      total: 0,
       industryList: [],
       page: 1,
       pageSize: 10,
-      typeId:0
+      typeId: 1,
     };
   },
   computed: {
@@ -113,20 +125,18 @@ export default {
   watch: {
     numTab: {
       handler(newValue, oldValue) {
-        this.getIndustryPage(newValue);
+        if (newValue.id) {
+          this.getIndustryPage(newValue);
+          this.typeId = newValue.id;
+        }
+
+        // this.getList();
       },
       immediate: true,
       deep: true,
     },
   },
-  watch: {
-    immediate: true,
-    deep: true,
-    numTab(newValue, oldValue) {
-      this.typeId=newValue.id
-      this.getList();
-    },
-  },
+
   mounted() {
     this.getList();
   },
@@ -137,10 +147,9 @@ export default {
     bindChangeList(id) {
       this.getIndustryPage(id);
     },
-    handleCurrentChange(val){
-      console.log(111,val)
-      this.page=val;
-      this.getIndustryPage()
+    handleCurrentChange(val) {
+      this.page = val;
+      this.getIndustryPage();
     },
     getList() {
       this.industryList = [];
@@ -164,35 +173,30 @@ export default {
       this.$request
         .get(Api.industryPage, {
           params: {
-            industry_id: 3,
-            first_cate_id: this.typeId,
+            industry_id: this.typeId,
+            first_cate_id: 3,
             page: this.page,
             pageSize: this.pageSize,
           },
         })
         .then((res) => {
-
           this.tableData = res.data.data;
-            this.total = res.data.total;
-          
+          this.total = res.data.total;
         });
     },
     getTableList(id) {
       this.$request
         .get(Api.industryPage, {
           params: {
-            industry_id: 6,
-            first_cate_id:this.typeId,
+            industry_id: this.typeId,
+            first_cate_id: 6,
             page: 1,
             pageSize: 10,
           },
         })
         .then((res) => {
-        
-        
           this.tableData2 = res.data.data;
-            this.total2 = res.data.total;
-          
+          this.total2 = res.data.total;
         });
     },
     gotoDetails(id) {
@@ -211,6 +215,7 @@ export default {
 <style lang="less" scoped>
 .numIntelligence-bg {
   width: 100vw;
+  height: calc(100vh - 5.725rem);
   background: #030913;
 }
 .classify {
@@ -370,5 +375,28 @@ export default {
 }
 .screen-dialog .el-table td.el-table__cell {
   border-bottom: 1px solid rgba(30, 134, 255, 0.1);
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled) {
+  background-color: #040a14;
+  border: 1px solid #758eb4;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: #1e86ff;
+  color: #fff;
+  border-color: #1e86ff;
+}
+
+.el-pagination .el-input__inner {
+  border-color: #758eb4;
+  background-color: #040a14;
+}
+.el-pagination .btn-next {
+  border-color: #1e86ff!important;
+  background-color: #1e86ff!important;
+}
+.el-pagination .btn-prev {
+  border-color: #162940!important;
+  background-color: #162940!important;
 }
 </style>

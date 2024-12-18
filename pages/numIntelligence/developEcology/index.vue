@@ -1,14 +1,8 @@
 <template>
-  <div class="deveop-container">
+  <div class="deveop-container numIntelligence-bg">
     <div class="container-main">
       <div class="classify">
-        <div
-          :class="index == activeTab ? 'active' : ''"
-          class="classify-item"
-          v-for="(item, index) in tabList"
-          :key="index"
-          @click="bindTab(item.url)"
-        >
+        <div :class="index == activeTab ? 'active' : ''" class="classify-item" v-for="(item, index) in tabList" :key="index" @click="bindTab(item.url)">
           {{ item.label }}
         </div>
       </div>
@@ -25,26 +19,15 @@
                   <div class="company-header-text">工作单位</div>
                   <div class="company-header-text">人才层次</div>
                 </div>
-                <div
-                  class="scroll"
-                  style="height: 37.5rem; overflow-y: auto"
-                  v-scrollList="6000"
-                >
-                  <div
-                    class="company-item"
-                    v-for="(item, index) in talent"
-                    :key="index"
-                  >
+                <div class="scroll" style="height: 37.5rem; overflow-y: auto" v-scrollList="6000">
+                  <div class="company-item" v-for="(item, index) in talent" :key="index" @click="bindChangeTalent(item)">
                     <div class="company-item-text" :title="item.name">
-                      {{ item.name }}
+                      {{ item.talent_name }}
                     </div>
-                    <div
-                      class="company-item-text text-two"
-                      :title="item.company"
-                    >
-                      {{ item.company }}
+                    <div class="company-item-text text-two" :title="item.company_name">
+                      {{ item.company_name }}
                     </div>
-                    <div class="company-item-text">{{ item.level }}</div>
+                    <div class="company-item-text">{{ item.rank }}</div>
                   </div>
                 </div>
               </div>
@@ -91,21 +74,49 @@
       <div class="container-middle">
         <div class="middle-tips">
           <div class="text-white">人才总数</div>
-          <div class="text-num">189673 <span class="text-unit">个</span></div>
+          <!-- 189673 -->
+          <div class="text-num"> {{ industry.name == "现代家居"
+                      ? 5289
+                      : industry.name == "生物医药"
+                      ? 2956
+                      : industry.name == "有色金属和新材料"
+                      ? 4986
+                      : industry.name == "新能源和新能源汽车"
+                      ? 3956
+                      : industry.name == "纺织服装"
+                      ? 3675
+                      : industry.name == "绿色食品"
+                      ? 3684
+                      : industry.name == "电子信息"
+                      ? 4052
+                      : 5289
+                  }} <span class="text-unit">个</span></div>
         </div>
         <div class="map">
-          <echartMap
-            width="65.3125rem"
-            height="47.8125rem"
-            chartId="map10"
-            :chartOption="chartOption"
-            v-if="isMap"
-          />
+          <echartMap width="65.3125rem" height="47.8125rem" chartId="map10" :chartOption="chartOption" v-if="isMap" :type="0" />
         </div>
         <div class="echarts-img">
-          <div class="img" @click="bindChangeRegion('全国')"><img src="../../../assets/images/numIntelligence/icon47.png" alt=""></div>
-          <div class="img"  @click="bindChangeRegion('江西省')"><img src="../../../assets/images/numIntelligence/icon51.png" alt=""></div>
-          <div class="img"  @click="bindChangeRegion('赣州市')"><img src="../../../assets/images/numIntelligence/icon52.png" alt=""></div>
+          <div class="img" @click="bindChangeRegion('全国')">
+            <img :src="
+                region == '全国'
+                  ? require('../../../assets/images/numIntelligence/icon47.png')
+                  : require('../../../assets/images/numIntelligence/icon50.png')
+              " alt="" />
+          </div>
+          <div class="img" @click="bindChangeRegion('江西省')">
+            <img :src="
+                region == '江西省'
+                  ? require('../../../assets/images/numIntelligence/icon48.png')
+                  : require('../../../assets/images/numIntelligence/icon51.png')
+              " alt="" />
+          </div>
+          <div class="img" @click="bindChangeRegion('赣州市')">
+            <img :src="
+                region == '赣州市'
+                  ? require('../../../assets/images/numIntelligence/icon49.png')
+                  : require('../../../assets/images/numIntelligence/icon52.png')
+              " alt="" />
+          </div>
         </div>
       </div>
       <div class="container-right">
@@ -115,17 +126,8 @@
               <div class="content-box-title-text">促进组织</div>
             </div>
             <div class="content-box-list right-top" style="height: 11rem">
-              <div
-                class="content-box-company scroll"
-                style="height: 11rem"
-                v-scrollList="5"
-              >
-                <div
-                  class="company-item"
-                  style="height: 3.125rem"
-                  v-for="(item, index) in promoteList"
-                  :key="index"
-                >
+              <div class="content-box-company scroll" style="height: 11rem" v-scrollList="5">
+                <div class="company-item" style="height: 3.125rem" v-for="(item, index) in promoteList" :key="index">
                   <div class="company-item-text-right">{{ item.name }}</div>
                 </div>
               </div>
@@ -145,11 +147,7 @@
                 </div>
 
                 <div class="scroll" style="height: 13.5rem; overflow-y: auto">
-                  <div
-                    class="company-item"
-                    v-for="(item, index) in serviceList"
-                    :key="index"
-                  >
+                  <div class="company-item" v-for="(item, index) in serviceList" :key="index">
                     <div class="company-item-text text-cut">
                       {{ item.classify }}
                     </div>
@@ -173,22 +171,12 @@
                   <div class="company-header-text name">活动名称</div>
                   <div class="company-header-text href">操作</div>
                 </div>
-                <div
-                  class="company-item right-bottom"
-                  v-for="(item, index) in facilitiesList"
-                  :key="index"
-                >
-                  <div
-                    class="company-item-text name text-cut"
-                    :title="item.name"
-                  >
+                <div class="company-item right-bottom" v-for="(item, index) in facilitiesList" :key="index">
+                  <div class="company-item-text name text-cut" :title="item.name">
                     {{ item.name }}
                   </div>
 
-                  <div
-                    class="company-item-text href"
-                    @click="bindNewWindow(item.url)"
-                  >
+                  <div class="company-item-text href" @click="bindNewWindow(item.url)">
                     点击进入
                   </div>
                 </div>
@@ -204,7 +192,7 @@
 import echartMap from "../components/echart-map.vue";
 import EchartsPie from "../components/echarts-pie.vue";
 import geoJson from "../../../assets/json/ganzhoushi.json";
-import talent from "../../../assets/json/modern/talent.json";
+// import talent from "../../../assets/json/modern/talent.json";
 import talentPie from "../../../assets/json/talent.json";
 import all from "../../../assets/json/modern/all.json";
 import facilitiesJson from "../../../assets/json/facilities.json";
@@ -241,7 +229,7 @@ export default {
       activeTab: 2,
       chartOption: { data: [] },
       isMap: true,
-      talent,
+      talent: [],
       jsonInfo: all,
       threeList: [],
       chartOptionPie: {
@@ -250,9 +238,10 @@ export default {
         radius: ["30%", "53%"],
         data: [],
       },
-      industry:'',
-      type:"规上企业",
-      region:'全国',
+      industry: {},
+      type: "",
+      region: '全国',
+      typeName: "",
     };
   },
   mounted() {
@@ -268,32 +257,36 @@ export default {
   watch: {
     numTab: {
       handler(newValue, oldValue) {
-        this.typeName =
-          newValue.name == "现代家居"
-            ? "modern"
-            : newValue.name == "有色金属和新材料"
-            ? "material"
-            : newValue.name == "电子信息"
-            ? "electronic"
-            : newValue.name == "新能源和新能源汽车"
-            ? "energy"
-            : newValue.name == "纺织服装"
-            ? "spinning"
-            : newValue.name == "生物医药"
-            ? "organism"
-            : newValue.name == "绿色食品"
-            ? "green"
-            : "modern";
-        this.chartOptionPie.data = this.talentPie[this.typeName];
-        this.serviceList = this.serviceJson[this.typeName];
-        let name = newValue.name ? newValue.name : "现代家居";
+        if (newValue.id) {
+          this.industry = newValue
+          this.typeName =
+            newValue.name == "现代家居"
+              ? "modern"
+              : newValue.name == "有色金属和新材料"
+                ? "material"
+                : newValue.name == "电子信息"
+                  ? "electronic"
+                  : newValue.name == "新能源和新能源汽车"
+                    ? "energy"
+                    : newValue.name == "纺织服装"
+                      ? "spinning"
+                      : newValue.name == "生物医药"
+                        ? "organism"
+                        : newValue.name == "绿色食品"
+                          ? "green"
+                          : "modern";
+          this.chartOptionPie.data = this.talentPie[this.typeName];
+          this.serviceList = this.serviceJson[this.typeName];
+          let name = newValue.name ? newValue.name : "现代家居";
 
-        this.facilitiesList = this.facilitiesJson.filter(
-          (item) => item.type == name
-        );
-        this.promoteList = this.promoteJson.filter((item) => item.type == name);
+          this.facilitiesList = this.facilitiesJson.filter(
+            (item) => item.type == name
+          );
+          this.promoteList = this.promoteJson.filter((item) => item.type == name);
+          this.getCompanyList(newValue);
+        }
 
-        console.log(3333, this.promoteJson, this.promoteList);
+
       },
       immediate: true,
       deep: true,
@@ -306,22 +299,42 @@ export default {
     bindNewWindow(url) {
       window.open(url, "_blank");
     },
-    bindChangeRegion(region){
-      this.region=region;
-      this.getCompanyList(this.industry,this.type,region)
-    }, 
-    getCompanyList(data) {
+    bindChangeRegion(region) {
+      this.region = region;
+      this.getCompanyList(this.industry, this.type, region)
+    },
+    bindChangeTalent(item) {
+      // this.getCompanyList(this.industry,this.type,region)
+      this.threeList = [item]
+      this.getMap(0);
+    },
+    getCompanyList(data, type, region) {
+      this.threeList = [];
+      this.talent = []
       this.$request
         .get(Api.talentmap, {
           params: {
             industry: data ? data.name : "现代家居",
             keyword: this.searchText,
+            type: type ? type : "",
+            region: region ? region : "全国",
           },
         })
         .then((res) => {
           if (res.code == 0) {
             if (res.data.list) {
+              // this.talent=res.data.list;
               this.threeList = res.data.list;
+              res.data.list.forEach(item => {
+                if (item.talents && item.talents.length) {
+                  item.talents.forEach(element => {
+                    this.talent.push({ ...item, ...element })
+                  })
+
+                }
+
+              })
+
               this.getMap(0);
             } else {
               this.isMap = true;
@@ -360,9 +373,14 @@ export default {
 </script>
 
 <style scoped lang="less">
+.numIntelligence-bg {
+  width: 100vw;
+  height: calc(100vh - 5.725rem);
+  background: #111b34;
+}
 .deveop-container {
-  width: 100%;
-  height: 100%;
+  // width: 100%;
+  // height: 100%;
   border-radius: 0px 0px 0px 0px;
   background-color: #111b34;
   overflow: hidden;
@@ -620,7 +638,7 @@ export default {
           color: #949ca9;
         }
       }
-      .echarts-img{
+      .echarts-img {
         width: 7.25rem;
         height: 18rem;
         position: absolute;
@@ -629,9 +647,9 @@ export default {
         background: url("../../../assets/images/numIntelligence/city.png")
           no-repeat center center;
         background-size: 100% 100%;
-        .img{
+        .img {
           width: 100%;
-          img{
+          img {
             width: 100%;
           }
         }
@@ -780,23 +798,21 @@ export default {
                   margin-right: 0.9rem;
                 }
               }
-              
-              
             }
             .serve {
-                .company-item:nth-child(2n) {
-                  background: url("../../../assets/images/numIntelligence/content1.png")
-                    no-repeat center;
-                  background-size: 100% 100%;
-                }
+              .company-item:nth-child(2n) {
+                background: url("../../../assets/images/numIntelligence/content1.png")
+                  no-repeat center;
+                background-size: 100% 100%;
               }
-              .all {
-                .company-item:nth-child(2n-1) {
-                  background: url("../../../assets/images/numIntelligence/content1.png")
-                    no-repeat center;
-                  background-size: 100% 100%;
-                }
+            }
+            .all {
+              .company-item:nth-child(2n-1) {
+                background: url("../../../assets/images/numIntelligence/content1.png")
+                  no-repeat center;
+                background-size: 100% 100%;
               }
+            }
           }
           .right-top.content-box-list {
             .company-item:nth-child(2n-1) {
@@ -845,5 +861,16 @@ export default {
     border-radius: 5px;
     background-color: #263648;
   }
+}
+</style>
+
+
+<style>
+.amap-logo {
+  display: none;
+  opacity: 0 !important;
+}
+.amap-copyright {
+  opacity: 0;
 }
 </style>

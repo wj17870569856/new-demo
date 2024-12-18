@@ -14,7 +14,7 @@ export default {
       required: true,
     },
     chartOption: {
-      type: Object,
+      type: Array,
       required: true,
     },
   },
@@ -218,9 +218,9 @@ export default {
                 },
               };
             }),
-            right:5,
-            top: 20,
-            itemGap: 3,
+            right:8,
+            top: 10,
+            itemGap:2,
             itemWidth: 5,
             itemHeight: 5,
             selectedMode: false, // 关闭图例选择
@@ -230,19 +230,19 @@ export default {
               rich: {
                 name: {
                   color: '#FFF',
-                  fontSize:8,
+                  fontSize:10,
                   width: 100,
                   padding: [0, 0, 0, 10],
                 },
                 percent: {
-                  width: 8,
+                  width: 9,
                   color: '#2BDFD4',
-                  fontSize: 8,
+                  fontSize:10,
                   padding: [0, 0, 0, 20],
                 },
                 unit: {
                   color: '#ACDCE4',
-                  fontSize:8,
+                  fontSize:10,
                   padding: [0, 0, 0, 5],
                 },
               },
@@ -256,7 +256,6 @@ export default {
                 total += Number(datas[i].value);
               }
 
-              console.log(111,target,total,((target / total) * 100).toFixed(0))
               const arr = [`{name|${name}}{percent|${((target / total) * 100).toFixed(0)}}{unit|%}`];
               return arr.join('');
             },
