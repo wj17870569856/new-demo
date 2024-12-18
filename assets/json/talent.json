@@ -1,0 +1,91 @@
+{
+  "modern": [
+    {
+      "name": "高校",
+      "value": 24
+    },
+    {
+      "name": "科研院所",
+      "value": 9
+    },
+    {
+      "name": "企业",
+      "value": 10
+    }
+   
+  ],
+  "material": [{
+    "name": "高校",
+    "value": 19
+  },
+  {
+    "name": "科研院所",
+    "value": 11
+  },
+  {
+    "name": "企业",
+    "value": 3
+  }],
+  "electronic": [{
+    "name": "高校",
+    "value": 31
+  },
+  {
+    "name": "科研院所",
+    "value": 11
+  },
+  {
+    "name": "企业",
+    "value": 4
+  }],
+  "energy": [{
+    "name": "高校",
+    "value": 32
+  },
+  {
+    "name": "科研院所",
+    "value": 7
+  },
+  {
+    "name": "企业",
+    "value": 4
+  }],
+  "spinning": [
+    {
+      "name": "高校",
+      "value": 41
+    },
+    {
+      "name": "科研院所",
+      "value": 5
+    },
+    {
+      "name": "企业",
+      "value": 6
+    }
+  ],
+  "green": [{
+    "name": "高校",
+    "value": 38
+  },
+  {
+    "name": "科研院所",
+    "value": 7
+  },
+  {
+    "name": "企业",
+    "value": 1
+  }],
+  "organism": [{
+    "name": "高校",
+    "value": 26
+  },
+  {
+    "name": "科研院所",
+    "value": 15
+  },
+  {
+    "name": "企业",
+    "value": 9
+  }]
+}

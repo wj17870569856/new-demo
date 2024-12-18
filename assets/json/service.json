@@ -1,0 +1,184 @@
+{
+  "modern": [
+    {
+      "classify": "研发设计",
+      "country": 77,
+      "province": 231,
+      "total": 308
+    },
+    {
+      "classify": "技术孵化",
+      "country": 2,
+      "province": 122,
+      "total": 124
+    },
+    {
+      "classify": "中试服务",
+      "country": 4,
+      "province": 41,
+      "total": 45
+    },
+    {
+      "classify": "合计",
+      "country": 83,
+      "province": 394,
+      "total": 477
+    }
+  ],
+  "material": [
+    {
+      "classify": "研发设计",
+      "country": 101,
+      "province": 251,
+      "total": 352
+    },
+    {
+      "classify": "技术孵化",
+      "country": 66,
+      "province": 659,
+      "total": 725
+    },
+    {
+      "classify": "中试服务",
+      "country": 2,
+      "province": 34,
+      "total": 36
+    },
+    {
+      "classify": "合计",
+      "country": 169,
+      "province": 944,
+      "total": 1113
+    }
+  ],
+  "electronic": [
+    {
+        "classify": "研发设计",
+        "country": 355,
+        "province": 1065,
+        "total": 1420
+      },
+      {
+        "classify": "技术孵化",
+        "country": 177,
+        "province": 2053,
+        "total": 2230
+      },
+      {
+        "classify": "中试服务",
+        "country": 34,
+        "province": 288,
+        "total": 322
+      },
+      {
+        "classify": "合计",
+        "country": 566,
+        "province": 3406,
+        "total": 3972
+      }
+  ],
+  "energy": [
+    {
+        "classify": "研发设计",
+        "country": 47,
+        "province": 134,
+        "total": 181
+      },
+      {
+        "classify": "技术孵化",
+        "country": 17,
+        "province": 161,
+        "total": 178
+      },
+      {
+        "classify": "中试服务",
+        "country": 4,
+        "province": 16,
+        "total": 20
+      },
+      {
+        "classify": "合计",
+        "country": 68,
+        "province": 311,
+        "total": 379
+      }
+  ],
+  "spinning": [
+    {
+        "classify": "研发设计",
+        "country": 70,
+        "province": 326,
+        "total": 396
+      },
+      {
+        "classify": "技术孵化",
+        "country": 15,
+        "province": 339,
+        "total": 354
+      },
+      {
+        "classify": "中试服务",
+        "country": 4,
+        "province": 49,
+        "total": 53
+      },
+      {
+        "classify": "合计",
+        "country": 89,
+        "province": 714,
+        "total": 803
+      }
+  ],
+  "green": [
+    {
+        "classify": "研发设计",
+        "country": 102,
+        "province": 388,
+        "total": 490
+      },
+      {
+        "classify": "技术孵化",
+        "country": 29,
+        "province": 690,
+        "total": 719
+      },
+      {
+        "classify": "中试服务",
+        "country": 1,
+        "province": 64,
+        "total": 65
+      },
+      {
+        "classify": "合计",
+        "country": 132,
+        "province": 1142,
+        "total": 1274
+      }
+  ],
+  "organism": [
+    {
+      "classify": "研发设计",
+      "country": 202,
+      "province": 465,
+      "total": 667
+    },
+    {
+      "classify": "技术孵化",
+      "country": 163,
+      "province": 1683,
+      "total": 1846
+    },
+    {
+      "classify": "中试服务",
+      "country": 6,
+      "province": 91,
+      "total": 97
+    },
+    {
+      "classify": "合计",
+      "country": 371,
+      "province": 2239,
+      "total": 2610
+    }
+  ]
+}
