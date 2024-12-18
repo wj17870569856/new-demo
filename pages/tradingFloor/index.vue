@@ -237,7 +237,7 @@ export default {
     getList() {
       const type_id = this.type_id;
       this.$request
-        .get("http://guanying-gbox-ai-bot.web.guanyingis.com/api/model_types")
+        .get("https://guanying-gbox-ai-bot.web.guanyingis.com/api/model_types")
         .then((data) => {
           this.model_types = data.filter(
             (item) => type_id == item.neighbourhood
@@ -246,7 +246,7 @@ export default {
         });
 
       this.$request
-        .get("http://guanying-gbox-ai-bot.web.guanyingis.com/api/models")
+        .get("https://guanying-gbox-ai-bot.web.guanyingis.com/api/models")
         .then((data) => {
           this.modelsData = data;
         });
