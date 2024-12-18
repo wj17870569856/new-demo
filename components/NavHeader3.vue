@@ -55,7 +55,7 @@
                 style="width:31px;height:31px"
                 :src="require('../assets/imgs/extend21.png')"
               ></el-image>
-              <p>产业大脑数智底座</p>
+              <p>产业数据平台</p>
             </div>
 
             <div class="item" @click="$router.push('/dataOpenPlatform')">
@@ -63,7 +63,7 @@
                 style="width:31px;height:31px"
                 :src="require('../assets/imgs/extend17.png')"
               ></el-image>
-              <p>模型共享中心</p>
+              <p>产业模型平台</p>
             </div>
 
             <div class="item" @click="$router.push('/productList')">
