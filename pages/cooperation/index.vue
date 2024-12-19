@@ -481,19 +481,19 @@ export default {
         font-size: 20px;
         color: #43546f;
 
-       &.active:nth-of-type(1) {
-            background-image: url(../../assets/imgs/cooperation_tab5.png);
-        }
-        &.active:nth-of-type(2) {
+        // &.active:nth-of-type(1) {
+        //   background-image: url(../../assets/imgs/cooperation_tab5.png);
+        // }
+        &.active:nth-of-type(1) {
           background-image: url(../../assets/imgs/cooperation_tab1.png);
         }
-        &.active:nth-of-type(3) {
+        &.active:nth-of-type(2) {
           background-image: url(../../assets/imgs/cooperation_tab2.png);
         }
-        &.active:nth-of-type(4) {
+        &.active:nth-of-type(3) {
           background-image: url(../../assets/imgs/cooperation_tab3.png);
         }
-        &.active:nth-of-type(5) {
+        &.active:nth-of-type(4) {
           background-image: url(../../assets/imgs/cooperation_tab4.png);
         }
       }
